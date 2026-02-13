@@ -6,7 +6,9 @@ class Button(QPushButton):
         style = f"""
         background-color: {color};
         font-size: 40px;
-
+        color: black;
+        border: 2px solid black;
+        border-radius: 10px;
 
         """
         self.setStyleSheet(style)
