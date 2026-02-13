@@ -1,5 +1,10 @@
 from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QPushButton, QLineEdit, QTextEdit, QHBoxLayout, QDateEdit
 from PySide6.QtCore import Qt
+from button import Button
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class PlusWidget(QWidget):
     def __init__(self):
@@ -17,22 +22,32 @@ class PlusWidget(QWidget):
 
         name_data_layout = QHBoxLayout()
 
-        title_text = QLineEdit()
-        title_text.setFixedSize(450,40)
-        title_text.setPlaceholderText("Titulo")
+        self.title_text = QLineEdit()
+        self.title_text.setFixedSize(350,40)
+        self.title_text.setPlaceholderText("Titulo")
 
-        data_text = QDateEdit()
-        data_text.setFixedSize(200,40)
+        self.img_url = QLineEdit()
+        self.img_url.setFixedSize(300,40)
+        self.img_url.setPlaceholderText("URL da imagem")
 
-        body_text = QTextEdit()
+        self.body_text = QTextEdit()
 
-        name_data_layout.addWidget(title_text, alignment=Qt.AlignmentFlag.AlignLeft)
+        self.add_button = QPushButton("Adicionar")
+        self.add_button.setStyleSheet('color: black;'
+                                      f'background-color: {os.getenv('VERDE')};'
+                                      'border: 2px solid black;'
+                                      'font-size: 16px;'
+                                      'border-radius: 5px;')
+        self.add_button.setFixedSize(150,30)
+
+        name_data_layout.addWidget(self.title_text, alignment=Qt.AlignmentFlag.AlignLeft)
         name_data_layout.setContentsMargins(0,10,10,15)
-        # name_data_layout.addWidget(data_text, alignment=Qt.AlignmentFlag.AlignRight)
+        name_data_layout.addWidget(self.img_url, alignment=Qt.AlignmentFlag.AlignRight)
         layout.addLayout(name_data_layout)
         name_data_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        layout.addWidget(body_text)
+        layout.addWidget(self.body_text)
+        layout.addWidget(self.add_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        body_text.setStyleSheet(style)
-        title_text.setStyleSheet(style)
-        data_text.setStyleSheet(style)
+        self.body_text.setStyleSheet(style)
+        self.title_text.setStyleSheet(style)
+        self.img_url.setStyleSheet(style)
