@@ -3,6 +3,9 @@ from PySide6.QtCore import Qt
 from button import Button
 import os
 from dotenv import load_dotenv
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
 
 load_dotenv()
 
@@ -17,6 +20,12 @@ class Delete(QWidget):
                 border: 2px solid black;
                 border-radius: 5px;
                 """
+        # BANCO DE DADOS
+        uri = os.getenv("URI")
+        self.client = MongoClient(uri, server_api=ServerApi("1"))
+        self.db = self.client["catalogo"]
+        self.colecao = self.db["jogos"]
+
 
         layout = QHBoxLayout()
         self.setLayout(layout)
@@ -28,6 +37,7 @@ class Delete(QWidget):
                 "border: 2px solid black;"
                 "border-radius: 5px;")
         self.del_btn.setFixedSize(100,40)
+        self.del_btn.clicked.connect(self.del_doc)
 
         self.delete_text = QLineEdit()
         self.delete_text.setStyleSheet(style)
@@ -35,3 +45,9 @@ class Delete(QWidget):
         self.delete_text.setPlaceholderText("Titulo")
         layout.addWidget(self.delete_text)
         layout.addWidget(self.del_btn)
+
+    def del_doc(self):
+        title = self.delete_text.text().lower()
+
+        documento = {"titulo": title}
+        self.colecao.delete_one(documento)

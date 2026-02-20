@@ -3,6 +3,8 @@ from PySide6.QtCore import Qt
 from button import Button
 import os
 from dotenv import load_dotenv
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 load_dotenv()
 
@@ -17,6 +19,13 @@ class Edit(QWidget):
                 border-radius: 5px;
 
                 """
+
+        # BANCO DE DADOS
+        uri = os.getenv("URI")
+        self.client = MongoClient(uri, server_api=ServerApi("1"))
+        self.db = self.client["catalogo"]
+        self.colecao = self.db["jogos"]
+
         layout = QVBoxLayout()
         self.setLayout(layout)
 
@@ -36,7 +45,16 @@ class Edit(QWidget):
                                       'font-size: 16px;'
                                       'border-radius: 5px;')
         self.edit_btn.setFixedSize(150, 30)
+        self.edit_btn.clicked.connect(self.edit_doc)
 
         layout.addWidget(self.edit_text)
         layout.addWidget(self.new_text)
         layout.addWidget(self.edit_btn, alignment=Qt.AlignmentFlag.AlignCenter)
+
+    def edit_doc(self):
+        title = self.edit_text.text().lower()
+        text = self.new_text.toPlainText()
+
+        filtro = {"titulo": title}
+        new_value = {"$set": {"texto": text}}
+        self.colecao.update_one(filtro, new_value)

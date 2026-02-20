@@ -1,0 +1,7 @@
+ROXO="rgb(185, 179,247)"
+ROSA="rgb(247, 201,227)"
+AMARELO="rgb(246, 247,184)"
+VERDE="rgb(197, 247, 223)"
+AZUL="rgb(170, 226, 247)"
+
+URI="uri de conexão com o mongodb atlas"
