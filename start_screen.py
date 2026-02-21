@@ -41,6 +41,7 @@ class StartScreen(QWidget):
         self.minus_btn = Button('-', os.getenv("ROSA"))
         self.edit_btn = Button('E', os.getenv("AMARELO"))
         self.src_btn = Button('SRC', os.getenv("ROXO"))
+
         bts_layout.addWidget(self.plus_btn)
         bts_layout.addWidget(self.minus_btn)
         bts_layout.addWidget(self.edit_btn)

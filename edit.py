@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QPushButton, QLineEdit, QTextEdit, QHBoxLayout, QDateEdit
 from PySide6.QtCore import Qt
 from button import Button
-import os
+import os, sys, certifi
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -22,7 +22,14 @@ class Edit(QWidget):
 
         # BANCO DE DADOS
         uri = os.getenv("URI")
-        self.client = MongoClient(uri, server_api=ServerApi("1"))
+        def resource_path(relative_path):
+            if hasattr(sys, '_MEIPASS'):
+                return os.path.join(sys._MEIPASS, relative_path)
+            return None  # se não estiver empacotado, retorna None
+
+        ca_file = resource_path("certifi/cacert.pem") or certifi.where()
+
+        self.client = MongoClient(uri, server_api=ServerApi("1"), tlsCAFile=ca_file)
         self.db = self.client["catalogo"]
         self.colecao = self.db["jogos"]
 
