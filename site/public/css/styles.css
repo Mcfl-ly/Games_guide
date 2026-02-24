@@ -1,0 +1,20 @@
+ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    list-style: none;
+}
+
+li {
+    margin: 0px 10px;
+
+}
+
+article {
+    height: 50%;
+    width: 50%;
+}
+
+body {
+    background-color: black;
+}
