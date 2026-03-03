@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { MongoClient } from "mongodb";
-
+import dotenv from "dotenv";
 dotenv.config();
 
 const uri = process.env.URI;
@@ -21,7 +21,6 @@ app.set("views", "./views");
 
 
 app.get("/", async (req, res) => {
-
     await client.connect();
     const db = client.db("catalogo");
     const collection = db.collection("jogos");
@@ -39,7 +38,63 @@ app.get("/", async (req, res) => {
     };
     console.log(jogos)
 
-    res.render("index.ejs", { resultado: jogos })
+    res.render("index.ejs", { resultado: jogos, pagina: 0, paginaLabel: 1 })
+});
+
+app.get("/game", (req, res) => {
+    const title = req.query.name;
+    console.log(title);
+})
+
+//botão de voltar
+app.get("/game/index/t:index", async  (req, res) => {
+    await client.connect();
+    const db = client.db("catalogo");
+    const collection = db.collection("jogos");
+    const resultado = await collection.find({}).toArray();
+    // console.log(resultado.length)
+    let result_games;
+    const jogos = [];
+    for (let i = 0; i < resultado.length; i++) {
+        result_games = {
+            "title": resultado[i]["titulo"],
+            "url": resultado[i]["url"],
+            "text": resultado[i]["texto"]
+        };
+        jogos.push(result_games)
+    }
+    console.log(jogos)
+
+    let stringIndex = req.params.index
+    let newString = stringIndex.split("")
+    let pagina = parseInt(newString[1])
+    console.log(pagina - 1);
+    res.render("index.ejs", { resultado: jogos, pagina: pagina - 1, paginaLabel: 1} );
+});
+
+app.get("/game/index/f:index", async (req, res) => {
+    await client.connect();
+    const db = client.db("catalogo");
+    const collection = db.collection("jogos");
+    const resultado = await collection.find({}).toArray();
+    // console.log(resultado.length)
+    let result_games;
+    const jogos = [];
+    for (let i = 0; i < resultado.length; i++) {
+        result_games = {
+            "title": resultado[i]["titulo"],
+            "url": resultado[i]["url"],
+            "text": resultado[i]["texto"]
+        };
+        jogos.push(result_games)
+    }
+    console.log(jogos)
+
+    let stringIndex = req.params.index
+    let newString = stringIndex.split("")
+    let pagina = parseInt(newString[1])
+    console.log(pagina + 1);
+    res.render("index.ejs", { resultado: jogos, pagina: pagina + 1, paginaLabel: 1} );
 });
 
 app.listen(3000, () => {
