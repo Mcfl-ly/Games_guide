@@ -41,9 +41,18 @@ app.get("/", async (req, res) => {
     res.render("index.ejs", { resultado: jogos, pagina: 0, paginaLabel: 1 })
 });
 
-app.get("/game", (req, res) => {
+
+
+app.get("/game", async (req, res) => {
     const title = req.query.name;
-    console.log(title);
+    await client.connect();
+    const db = client.db("catalogo");
+    const collection = db.collection("jogos");
+    const resultado = await collection.find({ "titulo": title }).toArray();
+    console.log(resultado)
+
+
+    res.render("game.ejs", { resultado: resultado });
 })
 
 //botão de voltar

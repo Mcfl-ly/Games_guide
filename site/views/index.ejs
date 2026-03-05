@@ -14,11 +14,23 @@
     <header> <%- include("partials/header")%></header>
 
         <section>
-            <article>
+
+            <article class="last-one">
+
+                <% let indice = resultado.length - 1 %>
+                <h2>Último jogo adicionado</h2>
+                <a href="/game?name=<%= resultado[indice].title %>" class="item">
+                    <img src="<%= resultado[indice].url %>" alt="capa <%= resultado[indice].title %>" width="300px" height="200px">
+                    <span><%= resultado[indice].title %></span>
+                </a>
+            </article>
+
+            <article class="all-games">
                 <ul>
                     <%
                     // const pagina = 0
                     // const paginaLabel = 1
+                    resultado.reverse()
                     const totalForPages = 6;
                     const inicio = pagina * totalForPages;
                     const fim = Math.min(inicio + totalForPages, resultado.length);
@@ -39,7 +51,7 @@
         </section>
     <div class="paginator">
         <a href="/game/index/t=<%=pagina  %>"><button class="pagDown btn btn-dark"><</button></a>
-        <%=pagina + 1%>
+        <span><%=pagina + 1%></span>
         <a href="/game/index/f=<%=pagina  %>"><button class="pagUp btn btn-dark">></button></a>
     </div>
 

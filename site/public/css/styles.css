@@ -11,7 +11,7 @@ li {
 }
 
 body {
-    background-color: white;
+    background-color: #181818;
     margin: 0;
 }
 
@@ -35,14 +35,75 @@ span {
     text-align: center;
 }
 
-section {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-}
 
 .btn {
     margin: 0px 10px;
+    background-color: #5e005e;
 }
+
+span {
+    color: white;
+}
+
+.last-one {
+    margin: 30px 0px 3% 0px;
+
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.last-one h2 {
+    color: white;
+}
+
+
+/*game.ejs css*/
+
+h1 {color: white;}
+p {color: white;}
+
+.game-container {
+    display: flex;
+
+    margin: 3% auto;
+}
+
+.cab-img {
+    display: flex;
+}
+
+.cab-infos {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+}
+.cab-img img {
+    display: inline;
+}
+.cab-infos h1 {
+    display: inline;
+    font-size: 40px;
+}
+
+.cab-infos h2 {
+    color: white;
+    font-size: 35px;
+    margin: 10px 0;
+}
+
+.cab-infos span {
+    color: yellow;
+    font-size: 30px;
+}
+
+.cab-infos a {
+    color: yellow;
+    font-size: 30px;
+}
+
