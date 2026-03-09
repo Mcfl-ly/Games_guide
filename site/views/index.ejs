@@ -49,10 +49,24 @@
             </article>
 
         </section>
+
+        <% if (pagina == 0) { %>
     <div class="paginator">
-        <a href="/game/index/t=<%=pagina  %>"><button class="pagDown btn btn-dark"><</button></a>
+
+        <% if ((pagina + 1) * 6 < resultado.length) { %>
         <span><%=pagina + 1%></span>
+    <a href="/game/index/f=<%=pagina  %>"><button class="pagUp btn btn-dark">></button></a>
+        <%}%>
+    <% } else { %>
+        <div class="paginator">
+        <a href="/game/index/t=<%=pagina  %>"><button class="pagDown btn btn-dark"><</button></a>
+
+        <span><%=pagina + 1%></span>
+            <% if ((pagina + 1) * 6 < resultado.length) { %>
         <a href="/game/index/f=<%=pagina  %>"><button class="pagUp btn btn-dark">></button></a>
+            <%}%>
+
+        <%}%>
     </div>
 
 
