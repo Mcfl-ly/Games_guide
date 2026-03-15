@@ -30,8 +30,9 @@
 </div>
 
     <div class="texto">
-        <p><%=resultado[0].texto %></p>
-
+        <% for (i=0;i<resultado[0].texto.length; i++) { %>
+        <p><%=resultado[0].texto[i] %></p>
+        <% } %>
 </div>
 
 

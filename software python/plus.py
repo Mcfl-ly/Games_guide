@@ -68,8 +68,20 @@ class PlusWidget(QWidget):
         self.steam_url.setPlaceholderText("Visite na Steam")
         self.layout_steam.addWidget(self.steam_url)
 
-
+        self.add_paragrafo = QHBoxLayout()
         self.body_text = QTextEdit()
+        self.add_pbutton = QPushButton("Add Paragráfo")
+        self.add_pbutton.setStyleSheet("background-color: rgb(197, 247, 223);"
+                                       "color: black;"
+                                       "border: 2px solid black;"
+                                       "font-size: 16px;"
+                                       "border-radius: 5px;"
+                                       "width: 100px;"
+                                       "height: 50px;")
+        self.add_pbutton.clicked.connect(self.adicionar_paragrafo)
+
+        self.add_paragrafo.addWidget(self.body_text)
+        self.add_paragrafo.addWidget(self.add_pbutton, alignment=Qt.AlignmentFlag.AlignBottom)
 
         self.add_button = QPushButton("Adicionar")
         self.add_button.setStyleSheet('color: black;'
@@ -95,12 +107,13 @@ class PlusWidget(QWidget):
         layout.addLayout(name_url_layout)
         layout.addLayout(data_dev_layout)
         layout.addLayout(self.layout_steam)
+        layout.addLayout(self.add_paragrafo)
 
         name_url_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         data_dev_layout.setAlignment(Qt.AlignmentFlag.AlignRight)
 
 
-        layout.addWidget(self.body_text)
+
         layout.addWidget(self.add_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.body_text.setStyleSheet(style)
@@ -110,12 +123,22 @@ class PlusWidget(QWidget):
         self.dev_text.setStyleSheet(style)
         self.steam_url.setStyleSheet(style)
 
+
+
+        self.paragrafos = []
+
+    def adicionar_paragrafo(self):
+        body_text = self.body_text.toPlainText()
+        self.paragrafos.append(body_text.capitalize())
+        self.body_text.clear()
+        print(self.paragrafos)
+
     def add_doc(self):
-        title = self.title_text.text().lower()
+        title = self.title_text.text().capitalize()
         img_url = self.img_url.text().lower()
-        body_text = self.body_text.toPlainText().lower()
-        data = self.data_text.text().lower()
-        dev = self.dev_text.text().lower()
+        body_text = self.paragrafos
+        data = self.data_text.text()
+        dev = self.dev_text.text().capitalize()
         link_steam = self.steam_url.text().lower()
         documento = {"titulo": title,
                      "url": img_url,

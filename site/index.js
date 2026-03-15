@@ -2,6 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import dns from "node:dns/promises";
+
+dns.setServers(["1.1.1.1"]);
 dotenv.config();
 
 const uri = process.env.URI;
